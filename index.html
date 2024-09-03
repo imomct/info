@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Info</title>
+    <script>
+        // Function to get URL parameter
+        // ?data=SGVsbG8sIFdvcmxkIQ==
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+            let results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Function to decode Base64 string
+        function decodeBase64(base64String) {
+            try {
+                return atob(base64String);
+            } catch (e) {
+                return "Invalid Base64 string";
+            }
+        }
+
+        // Function to update the body with the decoded text
+        function updateBodyWithDecodedText() {
+            let base64String = getParameterByName('data');
+            if (base64String) {
+                let decodedText = decodeBase64(base64String);
+                document.body.textContent = decodedText;
+            } else {
+                document.body.textContent = "No Base64 string found in the URL";
+            }
+        }
+
+        // Execute when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', updateBodyWithDecodedText);
+    </script>
+</head>
+<body>
+</body>
+</html>
