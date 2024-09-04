@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text to Base64 Encoder</title>
     <script>
-        // Function to encode a string to Base64
+        // Function to encode a string to Base64 and preserve line breaks
         function encodeToBase64() {
             // Get the input text
             const inputText = document.getElementById('inputText').value;
@@ -18,7 +18,7 @@
             const binaryString = String.fromCharCode(...byteArray);
             const base64String = btoa(binaryString);
 
-            // Display the encoded Base64 string
+            // Display the encoded Base64 string with preserved line breaks
             document.getElementById('outputText').textContent = base64String;
         }
     </script>
@@ -27,10 +27,10 @@
     <h1>Text to Base64 Encoder</h1>
     <div>
         <label for="inputText">Enter your text:</label>
-        <textarea id="inputText" rows="4" cols="50"></textarea>
+        <textarea id="inputText" rows="8" cols="50" placeholder="Type text with line breaks here..."></textarea>
     </div>
     <button onclick="encodeToBase64()">Encode to Base64</button>
     <h2>Encoded Base64:</h2>
-    <pre id="outputText"></pre>
+    <pre id="outputText" style="white-space: pre-wrap;"></pre>
 </body>
 </html>

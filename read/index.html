@@ -6,7 +6,7 @@
     <title>Base64 Decoder with UTF-8</title>
     <script>
         // Function to get URL parameter
-        // ?data=SGVsbG8gV29ybGQh
+        // ?data=SGVsbG8KV29ybGQ=
         function getParameterByName(name, url = window.location.href) {
             name = name.replace(/[\[\]]/g, '\\$&');
             let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
@@ -16,7 +16,7 @@
             return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
 
-        // Function to decode Base64 string to UTF-8
+        // Function to decode Base64 string to UTF-8 and preserve line breaks
         function decodeBase64ToUtf8(base64String) {
             try {
                 // Decode Base64 string to binary string
@@ -38,7 +38,8 @@
             let base64String = getParameterByName('data');
             if (base64String) {
                 let decodedText = decodeBase64ToUtf8(base64String);
-                document.body.textContent = decodedText;
+                // Display the decoded text with preserved line breaks
+                document.body.innerHTML = `<pre style="white-space: pre-wrap;">${decodedText}</pre>`;
             } else {
                 document.body.textContent = "No Base64 string found in the URL";
             }
@@ -51,4 +52,3 @@
 <body>
 </body>
 </html>
-
