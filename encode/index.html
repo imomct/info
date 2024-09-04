@@ -20,6 +20,7 @@
 
             // Display the encoded Base64 string with preserved line breaks
             document.getElementById('outputText').textContent = base64String;
+            document.getElementById("outputLink").textContent = "https://imomct.github.io/tools/read/?data=" + base64String;
         }
     </script>
 </head>
@@ -32,5 +33,6 @@
     <button onclick="encodeToBase64()">Encode to Base64</button>
     <h2>Encoded Base64:</h2>
     <pre id="outputText" style="white-space: pre-wrap;"></pre>
+    <pre id="outputLink" style="white-space: pre-wrap;"></pre>
 </body>
 </html>
