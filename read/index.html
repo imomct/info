@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Info</title>
+    <title>Base64 Decoder with UTF-8</title>
     <script>
         // Function to get URL parameter
-        // ?data=SGVsbG8sIFdvcmxkIQ==
+        // ?data=SGVsbG8gV29ybGQh
         function getParameterByName(name, url = window.location.href) {
             name = name.replace(/[\[\]]/g, '\\$&');
             let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
@@ -16,12 +16,20 @@
             return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
 
-        // Function to decode Base64 string
-        function decodeBase64(base64String) {
+        // Function to decode Base64 string to UTF-8
+        function decodeBase64ToUtf8(base64String) {
             try {
-                return atob(base64String);
+                // Decode Base64 string to binary string
+                const binaryString = atob(base64String);
+
+                // Convert binary string to a Uint8Array
+                const byteArray = new Uint8Array([...binaryString].map(char => char.charCodeAt(0)));
+
+                // Decode the byte array to a UTF-8 string
+                const utf8Decoder = new TextDecoder();
+                return utf8Decoder.decode(byteArray);
             } catch (e) {
-                return "Invalid Base64 string";
+                return "Invalid Base64 string or decoding error";
             }
         }
 
@@ -29,7 +37,7 @@
         function updateBodyWithDecodedText() {
             let base64String = getParameterByName('data');
             if (base64String) {
-                let decodedText = decodeBase64(base64String);
+                let decodedText = decodeBase64ToUtf8(base64String);
                 document.body.textContent = decodedText;
             } else {
                 document.body.textContent = "No Base64 string found in the URL";
@@ -43,3 +51,4 @@
 <body>
 </body>
 </html>
+
