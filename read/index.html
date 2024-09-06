@@ -1,54 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../src/main.css" rel="stylesheet" />
     <title>Base64 Decoder with UTF-8</title>
     <script>
-        // Function to get URL parameter
-        // ?data=SGVsbG8KV29ybGQ=
-        function getParameterByName(name, url = window.location.href) {
-            name = name.replace(/[\[\]]/g, '\\$&');
-            let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-            let results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+      // Function to get URL parameter
+      // ?data=SGVsbG8KV29ybGQ=
+      function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, "\\$&");
+        let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+        let results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return "";
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+      }
+
+      // Function to decode Base64 string to UTF-8 and preserve line breaks
+      function decodeBase64ToUtf8(base64String) {
+        try {
+          // Decode Base64 string to binary string
+          const binaryString = atob(base64String);
+
+          // Convert binary string to a Uint8Array
+          const byteArray = new Uint8Array(
+            [...binaryString].map((char) => char.charCodeAt(0))
+          );
+
+          // Decode the byte array to a UTF-8 string
+          const utf8Decoder = new TextDecoder();
+          return utf8Decoder.decode(byteArray);
+        } catch (e) {
+          return "Invalid Base64 string or decoding error";
         }
+      }
 
-        // Function to decode Base64 string to UTF-8 and preserve line breaks
-        function decodeBase64ToUtf8(base64String) {
-            try {
-                // Decode Base64 string to binary string
-                const binaryString = atob(base64String);
-
-                // Convert binary string to a Uint8Array
-                const byteArray = new Uint8Array([...binaryString].map(char => char.charCodeAt(0)));
-
-                // Decode the byte array to a UTF-8 string
-                const utf8Decoder = new TextDecoder();
-                return utf8Decoder.decode(byteArray);
-            } catch (e) {
-                return "Invalid Base64 string or decoding error";
-            }
+      // Function to update the body with the decoded text
+      function updateBodyWithDecodedText() {
+        let base64String = getParameterByName("data");
+        if (base64String) {
+          let decodedText = decodeBase64ToUtf8(base64String);
+          // Display the decoded text with preserved line breaks
+          // document.body.innerHTML = `<pre style="white-space: pre-wrap;">${decodedText}</pre>`;
+          document.getElementById("contentData").textContent = decodedText;
+        } else {
+          document.getElementById("contentData").textContent =
+            "No Base64 string found in the URL";
         }
+      }
 
-        // Function to update the body with the decoded text
-        function updateBodyWithDecodedText() {
-            let base64String = getParameterByName('data');
-            if (base64String) {
-                let decodedText = decodeBase64ToUtf8(base64String);
-                // Display the decoded text with preserved line breaks
-                document.body.innerHTML = `<pre style="white-space: pre-wrap;">${decodedText}</pre>`;
-            } else {
-                document.body.textContent = "No Base64 string found in the URL";
-            }
-        }
-
-        // Execute when the DOM is fully loaded
-        document.addEventListener('DOMContentLoaded', updateBodyWithDecodedText);
+      // Execute when the DOM is fully loaded
+      document.addEventListener("DOMContentLoaded", updateBodyWithDecodedText);
     </script>
-</head>
-<body>
-</body>
+  </head>
+  <body class="h-full bg-slate-200 dark:bg-zinc-800 py-16">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div
+        class="relative overflow-hidden bg-gray-900 px-6 py-20 shadow-xl rounded-3xl sm:px-10 sm:py-24 md:px-12 lg:px-20"
+      >
+        <div
+          class="absolute -left-80 -top-56 transform-gpu blur-3xl"
+          aria-hidden="true"
+        >
+          <div
+            class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#ff4694] to-[#776fff] opacity-[0.45]"
+            style="
+              clip-path: polygon(
+                74.1% 44.1%,
+                100% 61.6%,
+                97.5% 26.9%,
+                85.5% 0.1%,
+                80.7% 2%,
+                72.5% 32.5%,
+                60.2% 62.4%,
+                52.4% 68.1%,
+                47.5% 58.3%,
+                45.2% 34.5%,
+                27.5% 76.7%,
+                0.1% 64.9%,
+                17.9% 100%,
+                27.6% 76.8%,
+                76.1% 97.7%,
+                74.1% 44.1%
+              );
+            "
+          ></div>
+        </div>
+        <div
+          class="hidden md:absolute md:bottom-16 md:left-[50rem] md:block md:transform-gpu md:blur-3xl"
+          aria-hidden="true"
+        >
+          <div
+            class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#ff4694] to-[#776fff] opacity-25"
+            style="
+              clip-path: polygon(
+                74.1% 44.1%,
+                100% 61.6%,
+                97.5% 26.9%,
+                85.5% 0.1%,
+                80.7% 2%,
+                72.5% 32.5%,
+                60.2% 62.4%,
+                52.4% 68.1%,
+                47.5% 58.3%,
+                45.2% 34.5%,
+                27.5% 76.7%,
+                0.1% 64.9%,
+                17.9% 100%,
+                27.6% 76.8%,
+                76.1% 97.7%,
+                74.1% 44.1%
+              );
+            "
+          ></div>
+        </div>
+
+        <div class="relative mx-auto lg:mx-0">
+          <div
+            class="text-white text-xl leading-8 text-wrap"
+            id="contentData"
+            style="white-space: pre-wrap"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
